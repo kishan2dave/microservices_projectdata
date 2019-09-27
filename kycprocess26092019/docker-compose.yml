@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=kyaprocess
+      - MYSQL_USER=mysql_user
+      - MYSQL_PASSWORD=mysql_pass
+    volumes:
+      - /data/mysql
+  demo-app:
+    image: repo/kycprocessimage-app2
+    build:
+      context: ./
+      dockerfile: dockerfile
+    depends_on:
+      - mysql
+    ports:
+      - 7080:6060
+    volumes:
+      - /data/compose-app
